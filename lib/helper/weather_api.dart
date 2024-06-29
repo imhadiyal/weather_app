@@ -15,11 +15,12 @@ class Helper {
   Future<List<Weather>> initdata() async {
     http.Response response = await http.get(Uri.parse(api));
     if (response.statusCode == 200) {
-      Map data = jsonDecode(response.body.toString());
-      List weather = data['location'];
+      Map data = jsonDecode(response.body)['location'];
+      List weather = data.entries.map((e) => e.value).toList();
 
       Logger().i(weather);
       allWeatherLocation = weather.map((e) => Weather.fromJson(e)).toList();
+      // allWeatherLocation = weather.map((e) => Weather.fromJson(e)).toList();
     }
     return allWeatherLocation;
   }
