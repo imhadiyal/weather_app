@@ -9,7 +9,7 @@ class WeatherController extends GetxController {
     initdata();
   }
   RxList<City> allweather = <City>[].obs;
-  RxList<CityWeather> cityWeather = <CityWeather>[].obs;
+  RxList<CityWeatherModal> cityWeather = <CityWeatherModal>[].obs;
   RxBool isLogin = true.obs;
 
   Future<void> initdata({String city = 'Surat'}) async {

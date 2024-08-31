@@ -25,8 +25,8 @@ class Helper {
     return allcity;
   }
 
-  Future<CityWeather> cityWeatherApi({required City city}) async {
-    CityWeather cityWeather = CityWeather.fromJson({});
+  Future<CityWeatherModal> cityWeatherApi({required City city}) async {
+    CityWeatherModal cityWeather = CityWeatherModal.fromJson({});
     String searchCityApi =
         '$_weather/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=$_api';
     http.Response response = await http.get(Uri.parse(searchCityApi));
@@ -34,7 +34,7 @@ class Helper {
     if (response.statusCode == 200) {
       Map cityWeatherMap = jsonDecode(response.body);
       cityWeather =
-          CityWeather.fromJson(cityWeatherMap as Map<String, dynamic>);
+          CityWeatherModal.fromJson(cityWeatherMap as Map<String, dynamic>);
     }
     return cityWeather;
   }

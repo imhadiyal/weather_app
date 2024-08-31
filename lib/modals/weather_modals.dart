@@ -1,11 +1,4 @@
-import 'dart:convert';
-
-CityWeather cityWeatherFromJson(String str) =>
-    CityWeather.fromJson(json.decode(str));
-
-String cityWeatherToJson(CityWeather data) => json.encode(data.toJson());
-
-class CityWeather {
+class CityWeatherModal {
   Coord coord;
   List<Weather> weather;
   String base;
@@ -20,7 +13,7 @@ class CityWeather {
   String name;
   int cod;
 
-  CityWeather({
+  CityWeatherModal({
     required this.coord,
     required this.weather,
     required this.base,
@@ -36,8 +29,9 @@ class CityWeather {
     required this.cod,
   });
 
-  factory CityWeather.fromJson(Map<String, dynamic> json) => CityWeather(
-        coord: Coord.fromJson(json["coord"]),
+  factory CityWeatherModal.fromJson(Map<String, dynamic> json) =>
+      CityWeatherModal(
+        coord: Coord.fromJson(json["coord"] ?? ''),
         weather:
             List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
         base: json["base"],
