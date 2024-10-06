@@ -10,7 +10,8 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WeatherController controller = Get.find<WeatherController>();
+    Controller controller = Get.put(Controller());
+
     return Obx(
       () => Scaffold(
         appBar: AppBar(

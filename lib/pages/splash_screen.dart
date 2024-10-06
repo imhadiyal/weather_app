@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:weather_app/routes.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.deepPurple, Colors.purpleAccent],
             begin: Alignment.topCenter,
@@ -20,14 +24,14 @@ class SplashScreen extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 20),
               child: Image.asset(
-                'assets/weather_icon.png',
+                'lib/assets/weather_icon.png',
                 height: 150,
               ),
             ),
             // Text Widgets for "Weather Forecasts"
             RichText(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              text: const TextSpan(
                 children: [
                   TextSpan(
                     text: 'Weather\n',
@@ -52,16 +56,16 @@ class SplashScreen extends StatelessWidget {
             // Get Start Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.amber, // Background color
+                backgroundColor: Colors.amber, // Background color
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, 'weather_screen');
+                Get.offAllNamed(Routes.weatherScreen);
               },
-              child: Text(
+              child: const Text(
                 'Get Start',
                 style: TextStyle(
                   color: Colors.indigo, // Text color

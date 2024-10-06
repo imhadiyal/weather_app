@@ -1,13 +1,16 @@
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:weather_app/pages/detailpage.dart';
+import 'package:weather_app/pages/splash_screen.dart';
+import 'package:weather_app/pages/weather_screen.dart';
+
 class Routes {
-  Routes._();
-  static final Routes routes = Routes._();
+  static const String splash = '/';
+  static const String weatherScreen = 'weather_page';
+  static const String register = 'register';
+  static const String dashboard = 'dashboard';
 
-  String splash = '/';
-
-  String weather_screen = 'weather_screen';`
-  String add = 'add';
-  Map<String, WidgetBuilder> get allRoutes => {
-        '/': (context) => const SplashScreen(),
-    'weather_screen': (context) => const WeatherScreen(),
-      };
+  static List<GetPage> routes = [
+    GetPage(name: splash, page: () => const SplashScreen()),
+    GetPage(name: weatherScreen, page: () => WeatherInfo()),
+  ];
 }

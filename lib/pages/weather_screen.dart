@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:weather_app/controller/weather.dart';
 
-class WeatherScreen extends StatelessWidget {
+class WeatherInfo extends StatelessWidget {
+  final WeatherController weatherController = Get.put(WeatherController());
+  final TextEditingController cityController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
-        width: double.infinity,
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.deepPurple, Colors.purpleAccent],
@@ -13,84 +20,137 @@ class WeatherScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 50),
-            Image.asset(
-              'assets/weather_icon.png',
-              height: 100,
-            ),
-            SizedBox(height: 20),
-            Text(
-              '19°',
-              style: TextStyle(
-                fontSize: 80,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-
-            Text(
-              'Surat\n${city.tempMax}°  ${city.tempmin}° ',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 20),
-            // House Icon
-            Image.asset(
-              'assets/house_icon.png',
-              height: 120,
-            ),
-            SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Obx(() {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Today',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        'July, 21',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 70,
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  TextField(
+                    cursorColor: Colors.white,
+                    controller: cityController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter city name',
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          weatherController.fetchWeather(cityController.text);
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    weatherController.weather.value.cityName,
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    weatherController.weather.value.description,
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  SizedBox(height: 16),
+                  Image.asset(
+                    width: 100,
+                    height: 100,
+                    'lib/assets/fav.png',
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    '${weatherController.weather.value.temperature}°C',
+                    style: TextStyle(fontSize: 48, color: Colors.white),
+                  ),
+                  SizedBox(height: 55),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      weatherForecastColumn(city.time.substring(11, 16),
-                          city.temp.toString(), 'assets/cloudy.png'),
-                      weatherForecastColumn(
-                          '16:00', '18°C', 'assets/rainy.png'),
-                      weatherForecastColumn(
-                          '17:00', '18°C', 'assets/rainy.png'),
-                      weatherForecastColumn(
-                          '18:00', '18°C', 'assets/rainy.png'),
+                      Column(
+                        children: [
+                          Image(
+                            image: AssetImage("lib/assets/sun.png"),
+                            height: 50,
+                            width: 50,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            'SUNRISE',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '7:00',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Image(
+                            image: AssetImage("lib/assets/wind.png"),
+                            height: 50,
+                            width: 50,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            'Wind',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '15.3 km/h',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Image(
+                              image: AssetImage("lib/assets/temp.png"),
+                              height: 50,
+                              width: 50,
+                              color: Colors.white),
+                          Text(
+                            'Temprature',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '23',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
-              ),
-            ),
-          ],
+              );
+            }),
+          ),
         ),
       ),
     );

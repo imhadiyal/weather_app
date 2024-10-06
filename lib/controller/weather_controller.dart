@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/helper/weather_api.dart';
 
 import '../modals/city_modals.dart';
 import '../modals/weather_modals.dart';
 
-class WeatherController extends GetxController {
-  WeatherController() {
+class Controller extends GetxController {
+  Controller() {
     initdata();
   }
+
   RxList<City> allweather = <City>[].obs;
   RxList<CityWeatherModal> cityWeather = <CityWeatherModal>[].obs;
   RxBool isLogin = true.obs;
@@ -27,6 +29,7 @@ class WeatherController extends GetxController {
   }
 
   Future<void> getCityWeather({required City city}) async {
-    cityWeather[0] = await Helper.helper.cityWeatherApi(city: city);
+    cityWeather = (await Helper.helper.cityWeatherApi(city: city))
+        as RxList<CityWeatherModal>;
   }
 }
